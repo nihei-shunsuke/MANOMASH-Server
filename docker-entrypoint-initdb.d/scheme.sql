@@ -1,0 +1,40 @@
+CREATE TABLE IF NOT EXISTS users (
+  user_id       INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+  user_name     VARCHAR(40)     NOT NULL,
+  email         VARCHAR(254)     NOT NULL,
+  password      VARCHAR(20)     NOT NULL,
+  introduce		VARCHAR(100)	NOT NULL,
+  created_at    DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at    DATETIME DEFAULT NULL
+);
+
+CREATE TABLE IF NOT EXISTS oshis (
+  oshi_id		INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+  user_id   INTEGER UNSIGNED,
+  oshi_name		VARCHAR(100)	NOT NULL,
+  birthday		DATETIME 			NOT NULL,
+  oshi_meet		VARCHAR(1024)	NOT NULL,
+  oshi_like1  VARCHAR(200) NOT NULL,
+  oshi_like2  VARCHAR(200) NOT NULL,
+  oshi_like3  VARCHAR(200) NOT NULL,
+  free_space	VARCHAR(1024)	NOT NULL,
+  interest		VARCHAR(1024)	NOT NULL,
+  reaction_num	INTEGER UNSIGNED,
+  created_at	DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at	DATETIME DEFAULT NULL,
+  deleted_at    DATETIME DEFAULT NULL,
+  FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+
+CREATE TABLE IF NOT EXISTS comments (
+  oshi_id    	INTEGER UNSIGNED NOT NULL,
+  nice_num		INTEGER UNSIGNED NOT NULL,
+  comment       VARCHAR(255) NOT NULL,
+  user_id       INTEGER UNSIGNED NOT NULL,
+  created_at    DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at    DATETIME,
+  deleted_at    DATETIME,
+  FOREIGN KEY (oshi_id) REFERENCES oshis(oshi_id) ON DELETE CASCADE,
+  FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);

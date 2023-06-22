@@ -24,7 +24,7 @@ type ResData struct {
 func MyPageHandler(w http.ResponseWriter, req *http.Request) {
 	id, err := strconv.Atoi(req.URL.Query().Get("id"))
 	if err != nil {
-		ResData := ResFlgCreate(0, "fail", 0)
+		ResData := ResFlgCreate(0, "fail", 0, "", "")
 		json.NewEncoder(w).Encode(ResData)
 		return
 	}
@@ -33,7 +33,7 @@ func MyPageHandler(w http.ResponseWriter, req *http.Request) {
 	var OshiData []model.Oshi
 	result := database.DB.First(&OshiData,"user_id = ?",id)
 	if result.Error != nil {
-		ResData := ResFlgCreate(0, "推しデータが見つかりませんでした", 0)
+		ResData := ResFlgCreate(0, "推しデータが見つかりませんでした", 0, "", "")
 		json.NewEncoder(w).Encode(ResData)
 		return
 	}

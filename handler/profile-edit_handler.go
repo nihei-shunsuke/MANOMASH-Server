@@ -12,7 +12,7 @@ import (
 func ProfileEditHandler(w http.ResponseWriter, req *http.Request) {
 	var reqOshiData model.Oshi
 	if err := json.NewDecoder(req.Body).Decode(&reqOshiData); err != nil {
-		ResData := ResFlgCreate(0, "デコードに失敗しました。", 0)
+		ResData := ResFlgCreate(0, "デコードに失敗しました。", 0, "", "")
 		json.NewEncoder(w).Encode(ResData)
 		return
 	}
@@ -40,13 +40,13 @@ func ProfileEditHandler(w http.ResponseWriter, req *http.Request) {
 		"updated_at": time.Now(),
 	})
 	if result.Error != nil {
-		ResData := ResFlgCreate(0, "アップデートに失敗しました", 0)
+		ResData := ResFlgCreate(0, "アップデートに失敗しました", 0, "", "")
 		json.NewEncoder(w).Encode(ResData)
 		return
 	}
-	ResData := ResFlgCreate(1, "succesful", uint(oshi.OshiID))
+	ResData := ResFlgCreate(1, "succesful", uint(oshi.OshiID), "", "")
 	if err := json.NewEncoder(w).Encode(result); err != nil {
-		ResData = ResFlgCreate(0, "エンコードに失敗しました", 0)
+		ResData = ResFlgCreate(0, "エンコードに失敗しました", 0, "", "")
 		json.NewEncoder(w).Encode(ResData)
 		return
 	}

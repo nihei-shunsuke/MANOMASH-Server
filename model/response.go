@@ -3,7 +3,9 @@ package model
 type ResFlg struct {
 	Status int    `json:"status"`
 	Result string `json:"result"`
-	Id     uint   `json:"id"`
+	User_ID    uint      `json:"user_id"`
+	UserName   string    `json:"user_name"`
+	Introduce  string    `json:"introduce"`
 }
 
 type ResOshiData struct {

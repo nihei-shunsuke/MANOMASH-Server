@@ -20,7 +20,7 @@ type ResData2 struct {
 func ProfileListHandler(w http.ResponseWriter, req *http.Request) {
 	id, err := strconv.Atoi(req.URL.Query().Get("id"))
 	if err != nil {
-		ResData := ResFlgCreate(0, "fail", 0)
+		ResData := ResFlgCreate(0, "fail", 0, "", "")
 		json.NewEncoder(w).Encode(ResData)
 		return
 	}

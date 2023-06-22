@@ -16,7 +16,7 @@ func SignUpHandler(w http.ResponseWriter, req *http.Request) {
 	if err := json.NewDecoder(req.Body).Decode(&reqUserData); err != nil {
 		fmt.Println(err)
 		http.Error(w, "fail to decode json\n", http.StatusBadRequest)
-		ResData := ResFlgCreate(0, "fail", 0)
+		ResData := ResFlgCreate(0, "fail", 0, "", "")
 		json.NewEncoder(w).Encode(ResData)
 		return
 	}
@@ -27,17 +27,17 @@ func SignUpHandler(w http.ResponseWriter, req *http.Request) {
 		reqUserData.Created_At = time.Now()
 		result = database.DB.Create(&reqUserData)
 		fmt.Println(reqUserData)
-		ResData := ResFlgCreate(1, "succesful", SendID.User_ID)
+		ResData := ResFlgCreate(1, "succesful", SendID.User_ID, "", "")
 
 		if err := json.NewEncoder(w).Encode(ResData); err != nil {
 			fmt.Println(err)
-			ResData := ResFlgCreate(0, "エンコードに失敗しました", 0)
+			ResData := ResFlgCreate(0, "エンコードに失敗しました", 0, "", "")
 			json.NewEncoder(w).Encode(ResData)
 			return
 		}
 		return
 	}
-	ResData := ResFlgCreate(0, "fail", 0)
+	ResData := ResFlgCreate(0, "fail", 0, "", "")
 	json.NewEncoder(w).Encode(ResData)
 	return
 }

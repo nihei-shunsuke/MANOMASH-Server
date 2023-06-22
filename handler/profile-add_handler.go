@@ -13,7 +13,7 @@ func ProfileAddHandler(w http.ResponseWriter, req *http.Request) {
 	var reqOshiData model.Oshi
 	if err := json.NewDecoder(req.Body).Decode(&reqOshiData); err != nil {
 		fmt.Println(err)
-		ResData := ResFlgCreate(0, "デコードに失敗しました", 0)
+		ResData := ResFlgCreate(0, "デコードに失敗しました", 0, "", "")
 		json.NewEncoder(w).Encode(ResData)
 		return
 	}
@@ -35,20 +35,20 @@ func ProfileAddHandler(w http.ResponseWriter, req *http.Request) {
 		result = database.DB.Create(&addData)
 		if result.Error != nil {
 			fmt.Println(result)
-			ResData := ResFlgCreate(0, "推しのデータを登録できませんでした", 0)
+			ResData := ResFlgCreate(0, "推しのデータを登録できませんでした", 0, "", "")
 
 			json.NewEncoder(w).Encode(ResData)
 			return
 		}
-		ResData := ResFlgCreate(1, "succesful", uint(SendID.OshiID))
+		ResData := ResFlgCreate(1, "succesful", uint(SendID.OshiID), "", "")
 		json.NewEncoder(w).Encode(ResData)
 		return
 	}
 
-	ResData := ResFlgCreate(0, "既にその推しのプロフィールを作成済みです。", uint(SendID.OshiID))
+	ResData := ResFlgCreate(0, "既にその推しのプロフィールを作成済みです。", uint(SendID.OshiID), "", "")
 	if err := json.NewEncoder(w).Encode(ResData); err != nil {
 		fmt.Println(err)
-		ResData := ResFlgCreate(0, "結果をエンコードできませんでした。", 0)
+		ResData := ResFlgCreate(0, "結果をエンコードできませんでした。", 0, "", "")
 		json.NewEncoder(w).Encode(ResData)
 		return
 	}

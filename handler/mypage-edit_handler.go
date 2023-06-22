@@ -13,7 +13,7 @@ import (
 func MyPageEditHandler(w http.ResponseWriter, req *http.Request) {
 	var reqUserData model.User
 	if err := json.NewDecoder(req.Body).Decode(&reqUserData); err != nil {
-		ResData := ResFlgCreate(0, "デコードに失敗しました", 0)
+		ResData := ResFlgCreate(0, "デコードに失敗しました", 0, "", "")
 		json.NewEncoder(w).Encode(ResData)
 		return
 	}
@@ -33,13 +33,13 @@ func MyPageEditHandler(w http.ResponseWriter, req *http.Request) {
 		"updated_at": time.Now(),
 	})
 	if result.Error != nil {
-		ResData := ResFlgCreate(0, "データを更新できませんでした", 0)
+		ResData := ResFlgCreate(0, "データを更新できませんでした", 0, "", "")
 
 		json.NewEncoder(w).Encode(ResData)
 		return
 	}
 
-	ResData := ResFlgCreate(1, "succesful", reqUserData.User_ID)
+	ResData := ResFlgCreate(1, "succesful", reqUserData.User_ID, "", "")
 	json.NewEncoder(w).Encode(ResData)
 	return
 }
